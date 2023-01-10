@@ -18,7 +18,17 @@ from get_reports import Reports
 app = Flask(__name__)
 api = Api(app)
 
+class Index(Resource):
+    def get(self):
+        return make_response(
+                jsonify(
+                    {
+                        'message': 'Welcome to the API for Mammory App\nStatus is OKAY!'
+                        }), 
+                    200)
 # API Endpoints
+api.add_resource(Index, '/api/', methods=['GET'])
+
 #For mammogram Model
 api.add_resource(Mammogram, '/api/mammogram', methods=['POST'])
 
