@@ -11,7 +11,7 @@ variables:
   azureServiceConnectionId: 'c959b663-3743-46b6-bcfe-559442358445'
 
   # Web app name
-  webAppName: ''
+  webAppName: 'mammory-server'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
