@@ -41,6 +41,5 @@ api.add_resource(Reports, '/api/getreports', methods=['GET'])
 
 if __name__ == '__main__':
     # run app with os environment host and port
-    host = os.environ.get('HOST', '0.0.0.0')
-    port = int(os.environ.get('PORT', 8080))
-    app.run(host=host, port=port, threaded = True)
+
+    app.run(threaded = True)
