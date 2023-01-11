@@ -1,4 +1,4 @@
-﻿aniso8601==9.0.1
+aniso8601==9.0.1
 image==1.5.33
 click==8.1.3
 colorama==0.4.6
@@ -9,10 +9,9 @@ itsdangerous==2.1.2
 Jinja2==3.1.2
 Levenshtein==0.20.9
 MarkupSafe==2.1.1
-numpy==1.23.5
+numpy==1.24.1
 pandas==1.5.2
-Pillow==9.4.0
-pyparsing==3.0.9
+pyparsing
 python-dateutil==2.8.2
 python-Levenshtein==0.20.9
 pytz==2022.7
