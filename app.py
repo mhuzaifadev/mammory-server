@@ -3,7 +3,6 @@ from flask_restful import Api, Resource
 from threading import Thread
 import json
 import base64
-from PIL import Image
 import io
 # from gunicorn import glogging
 import os
