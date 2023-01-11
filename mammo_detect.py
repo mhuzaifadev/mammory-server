@@ -3,7 +3,7 @@ from flask_restful import Api, Resource
 from threading import Thread
 import json
 import base64
-from PIL import Image
+from PIL.Image as Image
 import io
 from queue import Queue
 
