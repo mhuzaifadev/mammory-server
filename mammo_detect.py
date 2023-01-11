@@ -2,9 +2,6 @@ from flask import Flask, jsonify, request, make_response
 from flask_restful import Api, Resource
 from threading import Thread
 import json
-import base64
-from PIL import Image
-import io
 from queue import Queue
 
 class Mammogram(Resource):
