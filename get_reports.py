@@ -4,22 +4,23 @@ from threading import Thread
 from queue import Queue
 import pandas as pd
 import json
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import db
+import os
 
 class Reports(Resource):
     def get(self):
         accountID = request.args.get("accountID")
-        records = request.args.get("records")
         
         if accountID is None:
-            return make_response(jsonify({'error': 'lat is required as a query parameter'}), 400)
-        elif records is None:
-            return make_response(jsonify({'error': 'lng is required as a query parameter'}), 400)
+            return make_response(jsonify({'error': 'accountID is required as a query parameter'}), 400)
         else:
             # Create a queue to communicate the results from the worker thread
             queue = Queue()
 
             # Start a new thread to do some heavy processing
-            thread = Thread(target=getreports, args=(accountID,records, queue))
+            thread = Thread(target=self.get_reports, args=(accountID, queue))
             thread.start()
 
             thread.join()
@@ -39,16 +40,28 @@ class Reports(Resource):
         # else:
         #     return make_response(jsonify({'status': 'Bad Request'}), 400)
 
-def getreports(accountID,records, queue):
-    # Do some heavy processing here
-    # image_results = {'width': image.width, 'height': image.height}
-    # print(image_results,"\n\n\n")
-    # Put the results in the queue
-    df = pd.read_csv('reports.csv')
-    # data = df.to_json()
-    print(df.to_dict(orient='records'))
-    queue.put(df.to_dict(orient='records'))
+    def get_reports(self, email,queue):
 
-    # # Write JSON results to a file
-    # with open('image_results.json', 'w') as outfile:
-    #     json.dump(json_results, outfile)
+        
+        # Get a reference to the database
+        ref = db.reference("/")
+
+        # Define the email address to match
+        email_to_match = email
+
+        # Query the database for the matching entry
+        query = ref.order_by_child('Account ID').equal_to(email_to_match).get()
+
+        # Extract all fields of the matching entry
+        all_entries = []
+        if query:
+            for key in query.keys():
+                matching_entry = query[key]
+                # Do something with the matching entry, e.g. print all fields
+                
+                all_entries.append(matching_entry)
+        else:
+            print('No matching entry found.')
+        
+        queue.put(all_entries)
+

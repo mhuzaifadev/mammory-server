@@ -1,11 +1,11 @@
 from flask import Flask, jsonify, request, make_response
 from flask_restful import Api, Resource
 from threading import Thread
-import json
-import base64
-import io
+
 # from gunicorn import glogging
 import os
+import firebase_admin
+from firebase_admin import credentials
 
 # code for endpoints
 from mammo_detect import Mammogram
@@ -16,6 +16,14 @@ from get_reports import Reports
 
 app = Flask(__name__)
 api = Api(app)
+
+#define path for the json file with credentials
+path = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__))).replace("\\","/")+"/mammory-firebase-adminsdk-6ofc3-a36c7f4805.json"
+# Initialize Firebase app
+cred = credentials.Certificate(path)
+firebase_admin.initialize_app(cred, {
+    'databaseURL': 'https://mammory-default-rtdb.firebaseio.com/'
+})
 
 class Index(Resource):
     def get(self):
