@@ -36,7 +36,7 @@ class Ultrasound(Resource):
             predictions = queue.get()
 
             # Return the response
-            json_results = json.dumps(list(predictions))
+            json_results = json.dumps(predictions)
             return make_response(json_results, 200)
         else:
             return make_response(jsonify({'status': 'Bad Request'}), 400)
@@ -48,6 +48,7 @@ class Ultrasound(Resource):
         processed_image_grid = Image_Processing().image_processing_grid(image,"Ultrasound")
 
         pdf_file_name, data = ReportGeneration().generate_report(full_name, date_of_birth, email, lesion, risk_factor, processed_image_grid, message, sub_text, report_type)
+        print(data)
         response = ReportGeneration().push_to_firebase(pdf_file_name, data)
 
         # Put the results in the queue
