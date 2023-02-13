@@ -5,9 +5,9 @@ import tensorflow as tf
 import os
 from io import BytesIO
 import docx
-import matplotlib
+
 import matplotlib.pyplot as plt
-matplotlib.use('agg')
+
 
 class Image_Processing:
 
