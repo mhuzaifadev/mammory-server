@@ -6,6 +6,7 @@ import os
 from io import BytesIO
 import docx
 import matplotlib.pyplot as plt
+matplotlib.use('agg')
 
 class Image_Processing:
 
@@ -78,7 +79,7 @@ class Image_Processing:
             lesion = "Normal"
             risk_factor = 1 - risk_factor
             headline = "Normal Screening Result: No Evidence of Breast Cancer Detected"
-            sub_text = ""
+            sub_text = "While it's great news that your recent breast cancer screening results came back normal, it's important to remember that regular check-ups and screenings are crucial in early detection and prevention. We recommend scheduling a screening at least once a year, and if you have any concerns or questions, don't hesitate to seek a second opinion from a trusted medical professional. Stay proactive and vigilant in your health journey!"
 
         else:
             if class_type == 1:
@@ -87,17 +88,17 @@ class Image_Processing:
                 lesion = "Malignant"
 
             if risk_factor < 0.3:
-                headline = "Normal Screening Result: No Evidence of Breast Cancer Detected"
-                sub_text = ""
+                headline = "Your Wellness is so far assured: No Evidence of Breast Cancer Detected"
+                sub_text = "While it's great news that your recent breast cancer screening results came back normal, it's important to remember that regular check-ups and screenings are crucial in early detection and prevention. We recommend scheduling a screening at least once a year, and if you have any concerns or questions, don't hesitate to seek a second opinion from a trusted medical professional. Stay proactive and vigilant in your health journey!"
             elif risk_factor < 0.5:
                 headline = "Doctor Consultation Recommended: Taking a Proactive Approach to Your Health"
-                sub_text = ""
+                sub_text = "While it's important to take control of your health and seek medical advice, it doesn't mean there is necessarily a problem. Receiving a less-than-ideal result from a breast cancer screening can be scary, but it's important to remember that additional testing and consultation with a doctor can provide a clearer picture of your health. Don't hesitate to seek a second opinion and get all the information you need to make informed decisions about your well-being. You deserve to feel confident and empowered in your health journey."
             elif risk_factor < 0.75:
                 headline = "Possible " +lesion+ " Lesion: Further Evaluation Required"
-                sub_text = ""
+                sub_text = "A "+lesion+" lesion detected in your breast cancer screening requires further evaluation. We recommend seeking a second opinion and consulting with a doctor. Your well-being is our top priority, and we are here to support you. Stay positive and proactive during this time."
             else:
                 headline = "Classified with " +lesion+ " Breast Cancer: Prompt Medical Attention Necessary"
-                sub_text = ""
+                sub_text = "A "+lesion+" breast cancer diagnosis is a serious matter and requires immediate medical attention. We recommend seeking a second opinion from a trusted doctor to ensure the most accurate information and appropriate treatment plan. It's important to stay positive and proactive during this time and do not hesitate in seeking the support and guidance of medical professionals. Early detection is key in successfully managing and treating breast cancer. Remember, you are not alone in this journey and there is a wealth of resources and support available to you."
 
         return lesion, headline, sub_text
 

@@ -6,6 +6,7 @@ from queue import Queue
 from image_processing import Image_Processing
 from report_generation import ReportGeneration
 
+
 class Mammogram(Resource):
 
     def post(self):
