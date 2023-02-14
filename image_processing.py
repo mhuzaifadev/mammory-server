@@ -41,39 +41,42 @@ class Image_Processing:
 
 
     def mammogram_detect(self, image):
-        self.image = image
+        try:
+            self.image = image
 
-        # Convert the binary data to a numpy array
-        self.image = np.frombuffer(self.image, dtype=np.uint8)
-
-
-        # # Decode the numpy array using OpenCV
-        self.image = cv2.imdecode(self.image, cv2.IMREAD_UNCHANGED)
-        # self.image = cv2.imread("C:/Users/kingh/Downloads/mdb001.jpg")
-
-        # grayscale to BGR
+            # Convert the binary data to a numpy array
+            self.image = np.frombuffer(self.image, dtype=np.uint8)
 
 
-        # Receive image from API in the form of body file, read it using cv2
-    
-        self.image = cv2.resize(self.image, (224, 224))
-        self.image = cv2.cvtColor(self.image, cv2.COLOR_GRAY2BGR)
-        self.image = np.expand_dims(self.image, axis = 0)
-        self.image = self.image.astype('float32')
-        self.image /= 255
+            # # Decode the numpy array using OpenCV
+            self.image = cv2.imdecode(self.image, cv2.IMREAD_UNCHANGED)
+            # self.image = cv2.imread("C:/Users/kingh/Downloads/mdb001.jpg")
+
+            # grayscale to BGR
+
+
+            # Receive image from API in the form of body file, read it using cv2
         
-        path = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__))).replace("\\","/")
-        self.model = keras.models.load_model(path+"/mammogram-model.h5")
-        prediction = self.model.predict(self.image)
-        class_type = np.argmax(prediction)
-        print(prediction)
-        risk_factor = np.max(prediction)
+            self.image = cv2.resize(self.image, (224, 224))
+            self.image = cv2.cvtColor(self.image, cv2.COLOR_GRAY2BGR)
+            self.image = np.expand_dims(self.image, axis = 0)
+            self.image = self.image.astype('float32')
+            self.image /= 255
+            
+            path = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__))).replace("\\","/")
+            self.model = keras.models.load_model(path+"/mammogram-model.h5")
+            prediction = self.model.predict(self.image)
+            class_type = np.argmax(prediction)
+            print(prediction)
+            risk_factor = np.max(prediction)
 
-        lesion, headline, sub_text = self.message(class_type, risk_factor)
-        if lesion == "Normal":
-            risk_factor = 1 - risk_factor
-        
-        return "Mammogram", lesion, "%.2f" % (risk_factor*100), headline, sub_text
+            lesion, headline, sub_text = self.message(class_type, risk_factor)
+            if lesion == "Normal":
+                risk_factor = 1 - risk_factor
+            
+            return "Mammogram", lesion, "%.2f" % (risk_factor*100), headline, sub_text
+        except:
+            return "Mammogram", "Error", "Error", "Error", "Error"
 
     def message(self, class_type, risk_factor):
         if class_type == 0:
