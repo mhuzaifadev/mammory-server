@@ -64,7 +64,7 @@ class ReportGeneration():
         paragraph3.add_run(str(report_number))
 
         #separator
-        doc.add_paragraph().add_run(" _____________________________________________________________________________")
+        doc.add_paragraph().add_run(" ___________________________________________________________________________________")
 
         #paragraph for Lesion 
         paragraph4 = doc.add_paragraph()
